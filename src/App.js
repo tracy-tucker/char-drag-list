@@ -36,21 +36,23 @@ function App() {
       <header className="App-header">
         <h1>Final Space Characters</h1>
         <DragDropContext>
-          <Droppable>
-            <ul className="characters">
-              {finalSpaceCharacters.map(({id, name, thumb}) => {
-                return (
-                  <li key={id}>
-                    <div className="characters-thumb">
-                      <img src={thumb} alt={`${name} Thumb`} />
-                    </div>
-                    <p>
-                      { name }
-                    </p>
-                  </li>
-                );
-              })}
-            </ul>
+          <Droppable droppableId="characters">
+            {(provided) => (
+              <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
+                {finalSpaceCharacters.map(({id, name, thumb}) => {
+                  return (
+                    <li key={id}>
+                      <div className="characters-thumb">
+                        <img src={thumb} alt={`${name} Thumb`} />
+                      </div>
+                      <p>
+                        { name }
+                      </p>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </Droppable>
         </DragDropContext>
       </header>
@@ -65,3 +67,8 @@ export default App;
 
 // DragDropContext = Allows us to use the Beautiful DND library on our project
 // Droppable = Sets ups the area where we can have our individual items moved around
+
+// NOTES ON REQUIRED INSERTS FROM BEAUTIFUL DND:
+// Droppable requires a unique droppableId, it can be named whatever, as long as it is unique
+// You must create an IFFE function and pass in provided. Library insertion requirement. Add to outer-most Component.
+// {...provided.droppableProps} ref={provided.innerRef} is also required for the next inner component.
