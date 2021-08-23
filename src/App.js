@@ -55,6 +55,7 @@ function App() {
                     </Draggable>
                   );
                 })}
+                {provided.placeholder}
               </ul>
             )}
           </Droppable>
