@@ -1,5 +1,5 @@
 import React from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import './App.css';
 
 const finalSpaceCharacters = [
@@ -36,20 +36,22 @@ function App() {
       <header className="App-header">
         <h1>Final Space Characters</h1>
         <DragDropContext>
-          <ul className="characters">
-            {finalSpaceCharacters.map(({id, name, thumb}) => {
-              return (
-                <li key={id}>
-                  <div className="characters-thumb">
-                    <img src={thumb} alt={`${name} Thumb`} />
-                  </div>
-                  <p>
-                    { name }
-                  </p>
-                </li>
-              );
-            })}
-          </ul>
+          <Droppable>
+            <ul className="characters">
+              {finalSpaceCharacters.map(({id, name, thumb}) => {
+                return (
+                  <li key={id}>
+                    <div className="characters-thumb">
+                      <img src={thumb} alt={`${name} Thumb`} />
+                    </div>
+                    <p>
+                      { name }
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+          </Droppable>
         </DragDropContext>
       </header>
       <p>
@@ -60,3 +62,6 @@ function App() {
 }
 
 export default App;
+
+// DragDropContext = Allows us to use the Beautiful DND library on our project
+// Droppable = Sets ups the area where we can have our individual items moved around
