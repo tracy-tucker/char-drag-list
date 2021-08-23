@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './App.css';
 
@@ -31,15 +31,27 @@ const finalSpaceCharacters = [
 ]
 
 function App() {
+
+  const [characters, updateCharacters] = useState(finalSpaceCharacters)
+
+  function handleOnDragEnd(result) {
+    // console.log(result)
+    const items = Array.from(characters);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    updateCharacters(items);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Final Space Characters</h1>
-        <DragDropContext>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="characters">
             {(provided) => (
               <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
-                {finalSpaceCharacters.map(({id, name, thumb}, index) => {
+                {characters.map(({id, name, thumb}, index) => {
                   return (
                     <Draggable key={id} draggableId={id} index={index}>
                       {(provided) => (
@@ -77,3 +89,9 @@ export default App;
 // Droppable requires a unique droppableId, it can be named whatever, as long as it is unique
 // You must create an IFFE function and pass in provided. Library insertion requirement. Add to outer-most Component.
 // {...provided.droppableProps} ref={provided.innerRef} is also required for the next inner component.
+
+// onDragEnd handler function = this taps into state and allows for state updates.
+// console.log(result) will show:
+// Source = original location of the character card within the droppable component.
+// Destination = the NEW location of the character card within the droppable component.
+
