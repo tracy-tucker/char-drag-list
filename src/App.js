@@ -43,7 +43,7 @@ function App() {
                   return (
                     <Draggable key={id} draggableId={id} index={index}>
                       {(provided) => (
-                        <li {...provided.dragHandleProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                        <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                           <div className="characters-thumb">
                             <img src={thumb} alt={`${name} Thumb`} />
                           </div>
