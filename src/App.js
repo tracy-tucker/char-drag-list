@@ -1,5 +1,5 @@
 import React from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './App.css';
 
 const finalSpaceCharacters = [
@@ -39,16 +39,20 @@ function App() {
           <Droppable droppableId="characters">
             {(provided) => (
               <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
-                {finalSpaceCharacters.map(({id, name, thumb}) => {
+                {finalSpaceCharacters.map(({id, name, thumb}, index) => {
                   return (
-                    <li key={id}>
-                      <div className="characters-thumb">
-                        <img src={thumb} alt={`${name} Thumb`} />
-                      </div>
-                      <p>
-                        { name }
-                      </p>
-                    </li>
+                    <Draggable key={id} draggableId={id} index={index}>
+                      {(provided) => (
+                        <li {...provided.dragHandleProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                          <div className="characters-thumb">
+                            <img src={thumb} alt={`${name} Thumb`} />
+                          </div>
+                          <p>
+                            { name }
+                          </p>
+                        </li>
+                      )}
+                    </Draggable>
                   );
                 })}
               </ul>
