@@ -36,6 +36,7 @@ function App() {
 
   function handleOnDragEnd(result) {
     // console.log(result)
+    if (!result.destination) return;
     const items = Array.from(characters);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
@@ -95,3 +96,4 @@ export default App;
 // Source = original location of the character card within the droppable component.
 // Destination = the NEW location of the character card within the droppable component.
 
+// if (!result.destination) return; = If result destination does NOT exist, then we can return outside of that function.
